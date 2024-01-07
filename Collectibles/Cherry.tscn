@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://bp0s4b8s4c6st"]
+
+[ext_resource type="Texture2D" uid="uid://cgpdxjfg3xdpr" path="res://Sunny-land-files/Graphical Assets/spritesheets/cherry.png" id="1_vmxmo"]
+[ext_resource type="AudioStream" uid="uid://dnu5ljbh0kegi" path="res://Assets/Audio/Coin/coin_c_02-102844.mp3" id="2_17306"]
+
+[sub_resource type="GDScript" id="GDScript_6ngl2"]
+script/source = "extends Area2D
+
+@onready var collectAudio = get_node(\"CollectedAudio\")
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		collectAudio.play()
+		Game.Gold += 5
+		var tween = get_tree().create_tween()
+		var tween2 = get_tree().create_tween()
+		tween.tween_property(self, \"position\",position - Vector2(0,30), 0.3)
+		tween2.tween_property(self, \"modulate:a\", 0, 0.3)
+		tween.tween_callback(queue_free)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2oy01"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1tfp"]
+atlas = ExtResource("1_vmxmo")
+region = Rect2(0, 0, 21, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1cds"]
+atlas = ExtResource("1_vmxmo")
+region = Rect2(21, 0, 21, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfi1x"]
+atlas = ExtResource("1_vmxmo")
+region = Rect2(42, 0, 21, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itru8"]
+atlas = ExtResource("1_vmxmo")
+region = Rect2(63, 0, 21, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1kv6"]
+atlas = ExtResource("1_vmxmo")
+region = Rect2(84, 0, 21, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yy8a7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1tfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1cds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfi1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itru8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1kv6")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Cherry" type="Area2D"]
+script = SubResource("GDScript_6ngl2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2oy01")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_yy8a7")
+animation = &"Idle"
+autoplay = "Idle"
+frame = 2
+frame_progress = 0.194667
+
+[node name="CollectedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_17306")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

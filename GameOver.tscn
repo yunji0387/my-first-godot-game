@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://pcs1gsxynxvr"]
+
+[ext_resource type="PackedScene" uid="uid://8hk4q0ev36gv" path="res://BG.tscn" id="1_5jt7n"]
+[ext_resource type="Script" path="res://GameOver.gd" id="1_ti24b"]
+[ext_resource type="Texture2D" uid="uid://lsyssln005bi" path="res://Assets/Text/GameOverText.png" id="2_qy2xx"]
+[ext_resource type="AudioStream" uid="uid://b6hghpejeo2hx" path="res://Music by Ansimuz/Going Up.ogg" id="4_gyjyw"]
+[ext_resource type="AudioStream" uid="uid://bvxue1yxgm2y3" path="res://Assets/Audio/PlayerDeath/hurt_c_08-102842.mp3" id="5_q84wr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rn607"]
+bg_color = Color(0.894118, 0.490196, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.196078, 0.172549, 0.262745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pekqy"]
+bg_color = Color(1, 0.580392, 0.180392, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.196078, 0.172549, 0.262745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5tgg"]
+bg_color = Color(0.905882, 0.419608, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.196078, 0.172549, 0.262745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8yjrq"]
+bg_color = Color(0.694118, 0.313726, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.196078, 0.172549, 0.262745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="GameOver" type="Node2D"]
+script = ExtResource("1_ti24b")
+
+[node name="HomeButton" type="Button" parent="."]
+offset_left = 167.0
+offset_top = 411.0
+offset_right = 396.0
+offset_bottom = 508.0
+tooltip_text = "This is play button."
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_rn607")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pekqy")
+text = "Home"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 764.0
+offset_top = 406.0
+offset_right = 993.0
+offset_bottom = 503.0
+tooltip_text = "This is a quit button."
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_w5tgg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8yjrq")
+text = "QUIT"
+
+[node name="BG" parent="." instance=ExtResource("1_5jt7n")]
+
+[node name="GameOverText" type="Sprite2D" parent="."]
+position = Vector2(560, 158)
+texture = ExtResource("2_qy2xx")
+
+[node name="GameOverBGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gyjyw")
+autoplay = true
+
+[node name="DeadAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_q84wr")
+autoplay = true
+
+[connection signal="pressed" from="HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
